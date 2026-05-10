@@ -110,7 +110,7 @@ export function HomePage() {
                 onClick={() => navigate(`/itinerary/${trip.id}`)}
               >
                 <div className="home-trip-img-wrapper">
-                  <img src={trip.coverImage} className="home-trip-img" alt={trip.name} />
+                  <img src={trip.coverImage || trip.cover_image} className="home-trip-img" alt={trip.name} />
                   <div className="home-trip-status">
                     {trip.status}
                   </div>
@@ -119,12 +119,12 @@ export function HomePage() {
                   <div>
                     <h3 className="home-trip-name">{trip.name}</h3>
                     <div className="home-trip-meta">
-                      <div className="home-trip-meta-item"><Calendar size={12} /> {trip.startDate}</div>
-                      <div className="home-trip-meta-item"><MapPin size={12} /> {trip.destinationCount} Stops</div>
+                      <div className="home-trip-meta-item"><Calendar size={12} /> {trip.startDate || trip.start_date || 'Future'}</div>
+                      <div className="home-trip-meta-item"><MapPin size={12} /> {trip.destinationCount || 0} Stops</div>
                     </div>
                   </div>
                   <div className="home-trip-progress-bar">
-                    <div className="home-trip-progress-fill" style={{ width: `${trip.progress}%` }}></div>
+                    <div className="home-trip-progress-fill" style={{ width: `${trip.progress || 0}%` }}></div>
                   </div>
                 </div>
               </motion.div>

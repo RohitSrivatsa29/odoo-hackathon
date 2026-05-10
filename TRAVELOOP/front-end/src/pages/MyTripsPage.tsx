@@ -4,7 +4,6 @@ import {
   Plus, 
   MapPin, 
   Calendar, 
-  MoreVertical,
   Trash2,
   Edit,
   ExternalLink
@@ -14,8 +13,12 @@ import { useTrips } from '../context/TripContext';
 import './MyTripsPage.css';
 
 export function MyTripsPage() {
-  const { trips, deleteTrip } = useTrips();
+  const { trips, deleteTrip, loading } = useTrips();
   const navigate = useNavigate();
+
+  if (loading) {
+    return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', color: 'white' }}>Loading trips...</div>;
+  }
 
   return (
     <div className="trips-container">
@@ -34,91 +37,85 @@ export function MyTripsPage() {
       </div>
 
       <div className="trips-grid">
-        {trips.map((trip, idx) => (
-          <motion.div 
-            key={trip.id}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: idx * 0.1 }}
-            className="trips-card group"
-          >
-            <div className="trips-card-img-wrapper">
-              <img 
-                src={trip.coverImage} 
-                className="trips-card-img" 
-                alt={trip.name} 
-              />
-              <div className="trips-card-overlay"></div>
-              
-              <div className="trips-card-actions">
-                <button 
-                  onClick={() => deleteTrip(trip.id)}
-                  className="trips-action-btn trips-action-delete"
-                >
-                  <Trash2 size={18} />
-                </button>
-                <button 
-                  className="trips-action-btn trips-action-edit"
-                >
-                  <Edit size={18} />
-                </button>
+        {trips.length === 0 ? (
+          <div style={{ gridColumn: '1 / -1', textAlign: 'center', padding: '4rem', color: '#94a3b8' }}>
+            <p>No trips found. Start by creating your first adventure!</p>
+          </div>
+        ) : (
+          trips.map((trip, idx) => (
+            <motion.div 
+              key={trip.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: idx * 0.1 }}
+              className="trips-card group"
+            >
+              <div className="trips-card-img-wrapper">
+                <img 
+                  src={trip.cover_image || 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&q=80&w=1200'} 
+                  className="trips-card-img" 
+                  alt={trip.name} 
+                />
+                <div className="trips-card-overlay"></div>
+                
+                <div className="trips-card-actions">
+                  <button 
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      deleteTrip(trip.id);
+                    }}
+                    className="trips-action-btn trips-action-delete"
+                  >
+                    <Trash2 size={18} />
+                  </button>
+                  <button 
+                    className="trips-action-btn trips-action-edit"
+                  >
+                    <Edit size={18} />
+                  </button>
+                </div>
+
+                <div className="trips-card-status">
+                  {trip.status}
+                </div>
               </div>
 
-              <div className="trips-card-status">
-                {trip.status}
-              </div>
-            </div>
+              <div className="trips-card-body">
+                <div>
+                  <h3 className="trips-card-name">{trip.name}</h3>
+                  <p className="trips-card-desc">
+                    {trip.description}
+                  </p>
+                </div>
 
-            <div className="trips-card-body">
-              <div>
-                <h3 className="trips-card-name">{trip.name}</h3>
-                <p className="trips-card-desc">
-                  {trip.description}
-                </p>
-              </div>
-
-              <div className="trips-card-meta">
-                <div className="trips-meta-item">
-                  <p className="trips-meta-label">Date</p>
-                  <div className="trips-meta-value">
-                    <Calendar size={14} className="trips-meta-icon" />
-                    {new Date(trip.startDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                <div className="trips-card-meta">
+                  <div className="trips-meta-item">
+                    <p className="trips-meta-label">Date</p>
+                    <div className="trips-meta-value">
+                      <Calendar size={14} className="trips-meta-icon" />
+                      {trip.start_date ? new Date(trip.start_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : 'Future'}
+                    </div>
+                  </div>
+                  <div className="trips-meta-item">
+                    <p className="trips-meta-label">Budget</p>
+                    <div className="trips-meta-value">
+                      <span style={{ fontSize: '0.875rem' }}>$</span>
+                      {trip.budget || 0}
+                    </div>
                   </div>
                 </div>
-                <div className="trips-meta-item">
-                  <p className="trips-meta-label">Stops</p>
-                  <div className="trips-meta-value">
-                    <MapPin size={14} className="trips-meta-icon" />
-                    {trip.destinationCount} Destinations
-                  </div>
-                </div>
-              </div>
 
-              <div className="trips-progress-wrapper">
-                <div className="trips-progress-header">
-                  <span className="trips-progress-label">Planning Progress</span>
-                  <span className="trips-progress-value">{trip.progress}%</span>
-                </div>
-                <div className="trips-progress-bar">
-                  <motion.div 
-                    initial={{ width: 0 }}
-                    animate={{ width: `${trip.progress}%` }}
-                    transition={{ duration: 1, delay: idx * 0.1 }}
-                    className="trips-progress-fill"
-                  ></motion.div>
-                </div>
+                <button 
+                  onClick={() => navigate(`/itinerary/${trip.id}`)}
+                  className="trips-view-btn group/btn"
+                >
+                  View Itinerary
+                  <ExternalLink size={18} className="trips-view-icon" />
+                </button>
               </div>
-
-              <button 
-                onClick={() => navigate(`/itinerary/${trip.id}`)}
-                className="trips-view-btn group/btn"
-              >
-                View Itinerary
-                <ExternalLink size={18} className="trips-view-icon" />
-              </button>
-            </div>
-          </motion.div>
-        ))}
+            </motion.div>
+          ))
+        )}
       </div>
     </div>
   );

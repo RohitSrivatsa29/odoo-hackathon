@@ -39,7 +39,7 @@ export function PublicItineraryPage() {
     <div className="pub-itin-page">
       {/* Dynamic Hero */}
       <section className="pub-itin-hero">
-        <img src={trip.coverImage} className="pub-itin-hero-img" alt="" />
+        <img src={trip.coverImage || trip.cover_image} className="pub-itin-hero-img" alt="" />
         <div className="pub-itin-hero-overlay"></div>
         <div className="pub-itin-hero-content">
            <motion.div
@@ -53,8 +53,8 @@ export function PublicItineraryPage() {
               </div>
               <h1 className="pub-itin-trip-name">{trip.name}</h1>
               <div className="pub-itin-trip-meta">
-                 <div className="pub-itin-meta-item"><MapPin className="pub-itin-meta-icon" size={24} /> {trip.destinationCount} Cities</div>
-                 <div className="pub-itin-meta-item"><Calendar className="pub-itin-meta-icon" size={24} /> {trip.startDate} - {trip.endDate}</div>
+                 <div className="pub-itin-meta-item"><MapPin className="pub-itin-meta-icon" size={24} /> {trip.destinationCount || 0} Cities</div>
+                 <div className="pub-itin-meta-item"><Calendar className="pub-itin-meta-icon" size={24} /> {trip.startDate || trip.start_date || 'Future'} - {trip.endDate || trip.end_date || 'Future'}</div>
               </div>
            </motion.div>
         </div>
