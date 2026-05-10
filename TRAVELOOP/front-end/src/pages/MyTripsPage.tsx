@@ -58,7 +58,9 @@ export function MyTripsPage() {
                   <Trash2 size={18} />
                 </button>
                 <button 
+                  onClick={() => navigate(`/itinerary/${trip.id}`)}
                   className="trips-action-btn trips-action-edit"
+                  title="Edit Trip Itinerary"
                 >
                   <Edit size={18} />
                 </button>
@@ -110,7 +112,7 @@ export function MyTripsPage() {
               </div>
 
               <button 
-                onClick={() => navigate(`/itinerary/${trip.id}`)}
+                onClick={() => navigate(`/itinerary-view/${trip.id}`)}
                 className="trips-view-btn group/btn"
               >
                 View Itinerary

@@ -27,6 +27,7 @@ export function ChecklistPage() {
     { id: '6', name: 'Travel Insurance Documents', category: 'Essentials', isPacked: false },
   ]);
   const [newItemName, setNewItemName] = useState('');
+  const [activeCategory, setActiveCategory] = useState('All');
 
   const togglePacked = (id: string) => {
     setItems(items.map(item => item.id === id ? { ...item, isPacked: !item.isPacked } : item));
@@ -34,7 +35,8 @@ export function ChecklistPage() {
 
   const addItem = () => {
     if (!newItemName.trim()) return;
-    setItems([{ id: Date.now().toString(), name: newItemName, category: 'General', isPacked: false }, ...items]);
+    const cat = activeCategory === 'All' ? 'Essentials' : activeCategory;
+    setItems([{ id: Date.now().toString(), name: newItemName, category: cat, isPacked: false }, ...items]);
     setNewItemName('');
   };
 
@@ -42,7 +44,12 @@ export function ChecklistPage() {
     setItems(items.filter(item => item.id !== id));
   };
 
-  const progress = (items.filter(i => i.isPacked).length / items.length) * 100;
+  const clearCompleted = () => {
+    setItems(items.filter(item => !item.isPacked));
+  };
+
+  const progress = items.length === 0 ? 0 : (items.filter(i => i.isPacked).length / items.length) * 100;
+  const filteredItems = activeCategory === 'All' ? items : items.filter(i => i.category === activeCategory);
 
   return (
     <div className="checklist-container">
@@ -84,18 +91,30 @@ export function ChecklistPage() {
         </div>
 
         <div className="checklist-list-container">
-          <div className="checklist-categories">
-             {['Essentials', 'Tech', 'Clothing', 'Toiletries'].map(cat => (
-                <button key={cat} className="checklist-category-btn">
-                  {cat}
-                </button>
-             ))}
+          <div className="checklist-categories" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+             <div style={{ display: 'flex', gap: '1rem', overflowX: 'auto' }}>
+               {['All', 'Essentials', 'Tech', 'Clothing', 'Toiletries'].map(cat => (
+                  <button 
+                    key={cat} 
+                    onClick={() => setActiveCategory(cat)}
+                    className={`checklist-category-btn ${activeCategory === cat ? 'active' : ''}`}
+                  >
+                    {cat}
+                  </button>
+               ))}
+             </div>
+             <button onClick={clearCompleted} className="checklist-clear-btn" style={{ fontSize: '0.75rem', color: '#6b7280', background: 'none', border: 'none', cursor: 'pointer', whiteSpace: 'nowrap' }}>
+               Clear Completed
+             </button>
           </div>
           
           <div className="checklist-items">
             <AnimatePresence initial={false}>
-              {items.map((item) => (
-                <motion.div 
+              {filteredItems.length === 0 ? (
+                <div style={{ padding: '2rem', textAlign: 'center', color: '#6b7280' }}>No items in this category.</div>
+              ) : (
+                filteredItems.map((item) => (
+                  <motion.div 
                   key={item.id}
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
@@ -123,7 +142,8 @@ export function ChecklistPage() {
                     <Trash2 size={20} />
                   </button>
                 </motion.div>
-              ))}
+                ))
+              )}
             </AnimatePresence>
           </div>
         </div>

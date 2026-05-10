@@ -40,10 +40,10 @@ export function HomePage() {
             <div className="home-banner-tag">
               <span className="home-banner-tag-text">Upcoming Journey</span>
               <span className="home-banner-tag-dot"></span>
-              <span className="home-banner-tag-date">Summer 2026</span>
+              <span className="home-banner-tag-date">{trips && trips.length > 0 ? trips[0].startDate : 'Summer 2026'}</span>
             </div>
             <h1 className="home-banner-title">
-              Where to, <br />
+              Ready for {trips && trips.length > 0 ? trips[0].name : 'a new adventure'}, <br />
               <span className="home-banner-title-highlight">{user?.name || 'Traveler'}?</span>
             </h1>
             <button 
@@ -92,7 +92,7 @@ export function HomePage() {
         {/* Recent Trips */}
         <section className="home-recent-trips">
           <div className="home-section-header">
-            <h2 className="home-section-title">Your Recent Trips</h2>
+            <h2 className="home-section-title">Upcoming & Recent Trips</h2>
             <button 
               onClick={() => navigate('/trips')}
               className="home-section-link"

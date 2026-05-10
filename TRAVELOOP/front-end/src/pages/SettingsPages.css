@@ -1,0 +1,225 @@
+.settings-page-container {
+  padding: 40px;
+  max-width: 800px;
+  margin: 0 auto;
+  font-family: 'Inter', sans-serif;
+}
+
+.settings-page-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.settings-back-btn {
+  background: none;
+  border: none;
+  color: #64748b;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  border-radius: 50%;
+  transition: all 0.2s;
+}
+
+.settings-back-btn:hover {
+  background-color: #e2e8f0;
+  color: #0f172a;
+}
+
+.settings-page-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
+}
+
+.settings-card {
+  background: white;
+  border-radius: 16px;
+  padding: 30px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+  margin-bottom: 24px;
+  border: 1px solid #f1f5f9;
+}
+
+.settings-card-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin-top: 0;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #f1f5f9;
+  padding-bottom: 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.settings-form-group {
+  margin-bottom: 24px;
+}
+
+.settings-label {
+  display: block;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #475569;
+  margin-bottom: 8px;
+}
+
+.settings-input {
+  width: 100%;
+  padding: 14px 16px;
+  border: 2px solid #e2e8f0;
+  border-radius: 10px;
+  font-size: 1rem;
+  color: #1e293b;
+  transition: all 0.2s;
+  background-color: #f8fafc;
+  box-sizing: border-box;
+}
+
+.settings-input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  background-color: white;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+}
+
+.settings-btn-primary {
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  padding: 14px 28px;
+  border-radius: 10px;
+  font-size: 1.05rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 4px 6px rgba(59, 130, 246, 0.2);
+}
+
+.settings-btn-primary:hover {
+  background-color: #2563eb;
+  transform: translateY(-1px);
+}
+
+.settings-btn-danger {
+  background-color: #ef4444;
+  color: white;
+  border: none;
+  padding: 14px 28px;
+  border-radius: 10px;
+  font-size: 1.05rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.settings-btn-danger:hover {
+  background-color: #dc2626;
+}
+
+.settings-flex-row {
+  display: flex;
+  gap: 20px;
+}
+
+.settings-flex-row > * {
+  flex: 1;
+}
+
+/* Billing specific */
+.billing-plan-card {
+  border: 2px solid #3b82f6;
+  border-radius: 16px;
+  padding: 24px;
+  background: linear-gradient(to right, #eff6ff, #ffffff);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.plan-name {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #1e3a8a;
+  margin: 0 0 5px 0;
+}
+
+.plan-desc {
+  color: #64748b;
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.plan-price {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #1d4ed8;
+}
+
+.payment-method {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  margin-top: 15px;
+  background-color: white;
+}
+
+.payment-method-left {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.payment-method h4 {
+  margin: 0;
+  color: #1e293b;
+}
+
+.payment-method p {
+  margin: 0;
+  color: #64748b;
+  font-size: 0.9rem;
+}
+
+.session-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 0;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.session-item:last-child {
+  border-bottom: none;
+}
+
+.session-info h4 {
+  margin: 0 0 5px 0;
+  color: #0f172a;
+}
+
+.session-info p {
+  margin: 0;
+  color: #64748b;
+  font-size: 0.9rem;
+}
+
+.session-active {
+  color: #10b981;
+  font-size: 0.85rem;
+  font-weight: 600;
+  background: #d1fae5;
+  padding: 4px 10px;
+  border-radius: 20px;
+}

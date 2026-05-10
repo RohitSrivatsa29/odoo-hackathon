@@ -19,6 +19,9 @@ import { ChecklistPage } from './pages/ChecklistPage';
 import { JournalPage } from './pages/JournalPage';
 import { PublicItineraryPage } from './pages/PublicItineraryPage';
 import { ProfilePage } from './pages/ProfilePage';
+import { PersonalInfoPage } from './pages/PersonalInfoPage';
+import { SecurityPrivacyPage } from './pages/SecurityPrivacyPage';
+import { BillingPage } from './pages/BillingPage';
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const { isAuthenticated } = useAuth();
@@ -41,12 +44,16 @@ export default function App() {
               <Route path="/create-trip" element={<CreateTripPage />} />
               <Route path="/itinerary/:id" element={<ItineraryBuilderPage />} />
               <Route path="/itinerary-view" element={<ItineraryViewPage />} />
+              <Route path="/itinerary-view/:id" element={<ItineraryViewPage />} />
               <Route path="/explore-cities" element={<CitySearchPage />} />
               <Route path="/explore-activities" element={<ActivitySearchPage />} />
               <Route path="/budget" element={<BudgetBreakdownPage />} />
               <Route path="/checklist" element={<ChecklistPage />} />
               <Route path="/journal" element={<JournalPage />} />
               <Route path="/profile" element={<ProfilePage />} />
+              <Route path="/settings/personal-info" element={<PersonalInfoPage />} />
+              <Route path="/settings/security" element={<SecurityPrivacyPage />} />
+              <Route path="/settings/billing" element={<BillingPage />} />
             </Route>
           </Routes>
         </BrowserRouter>

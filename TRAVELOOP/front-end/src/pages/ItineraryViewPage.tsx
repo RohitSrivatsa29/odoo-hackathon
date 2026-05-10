@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { 
   Calendar as CalendarIcon, 
   MapPin, 
@@ -17,9 +18,21 @@ import { useTrips } from '../context/TripContext';
 import './ItineraryViewPage.css';
 
 export function ItineraryViewPage() {
-  const { trips } = useTrips();
-  const trip = trips[0]; // Active trip
+  const { id } = useParams();
+  const { trips, getTripById } = useTrips();
+  const trip = id ? getTripById(id) : trips[0];
   const [viewMode, setViewMode] = useState<'timeline' | 'grid'>('timeline');
+
+  if (!trip) {
+    return (
+      <div className="itin-view-container">
+        <div className="itin-view-header">
+          <h1 className="itin-view-title">No Trip Selected</h1>
+          <p className="itin-view-subtitle">Please select a trip from your dashboard to view its itinerary.</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="itin-view-container">
@@ -93,14 +106,14 @@ export function ItineraryViewPage() {
                  exit={{ opacity: 0, x: -20 }}
                  className="itin-view-timeline-list"
                >
-                 {trip.cities?.[0].activities.map((act: any, idx: number) => (
-                   <div key={act.id} className="itin-view-timeline-item group">
-                      <div className="itin-view-timeline-left">
-                         <div className="itin-view-day-circle">
-                            <span className="itin-view-day-circle-label">Day</span>
-                            <span className="itin-view-day-circle-num">01</span>
-                         </div>
-                         {idx < trip.cities[0].activities.length - 1 && <div className="itin-view-timeline-connector"></div>}
+                 {trip.cities?.[0]?.activities?.map((act: any, idx: number) => (
+                    <div key={act.id} className="itin-view-timeline-item group">
+                       <div className="itin-view-timeline-left">
+                          <div className="itin-view-day-circle">
+                             <span className="itin-view-day-circle-label">Day</span>
+                             <span className="itin-view-day-circle-num">01</span>
+                          </div>
+                          {idx < trip.cities[0].activities.length - 1 && <div className="itin-view-timeline-connector"></div>}
                       </div>
                       
                       <div className="itin-view-timeline-card-wrapper">
