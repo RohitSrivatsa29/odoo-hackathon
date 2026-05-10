@@ -1,0 +1,87 @@
+.itin-view-container { display: flex; flex-direction: column; gap: 2.5rem; }
+.itin-view-header { display: flex; flex-direction: column; gap: 1.5rem; }
+@media (min-width: 768px) { .itin-view-header { flex-direction: row; align-items: flex-end; justify-content: space-between; } }
+.itin-view-header-left { display: flex; flex-direction: column; gap: 1rem; }
+.itin-view-title { font-size: 2.25rem; font-weight: 700; color: white; letter-spacing: -0.025em; }
+.itin-view-subtitle { color: #6b7280; font-weight: 500; font-size: 1.125rem; letter-spacing: -0.025em; }
+.itin-view-mode-toggle { display: flex; background-color: rgba(255,255,255,0.05); padding: 0.375rem; border-radius: 1rem; border: 1px solid rgba(255,255,255,0.1); }
+.itin-view-mode-btn { display: flex; align-items: center; gap: 0.5rem; padding: 0.625rem 1.25rem; border-radius: 0.75rem; font-weight: 700; font-size: 0.625rem; text-transform: uppercase; letter-spacing: 0.1em; transition: all 0.2s; color: #6b7280; background: none; border: none; cursor: pointer; }
+.itin-view-mode-btn:hover { color: white; }
+.itin-view-mode-btn.active { background-color: #f97316; color: white; box-shadow: 0 10px 15px -3px rgba(249,115,22,0.2); }
+.itin-view-body { display: flex; flex-direction: column; gap: 2.5rem; }
+@media (min-width: 1280px) { .itin-view-body { flex-direction: row; } }
+.itin-view-sidebar { width: 100%; display: flex; flex-direction: column; gap: 2rem; order: 2; }
+@media (min-width: 1280px) { .itin-view-sidebar { width: 24rem; order: 1; } }
+.itin-view-nav-card { background-color: #080808; border-radius: 2.5rem; border: 1px solid rgba(255,255,255,0.05); padding: 2rem; display: flex; flex-direction: column; gap: 2rem; }
+.itin-view-nav-header { display: flex; align-items: center; justify-content: space-between; }
+.itin-view-nav-title { font-size: 0.625rem; font-weight: 700; color: #6b7280; text-transform: uppercase; letter-spacing: 0.2em; padding-left: 0.5rem; }
+.itin-view-nav-arrows { display: flex; gap: 0.25rem; }
+.itin-view-nav-btn { padding: 0.5rem; color: #4b5563; border-radius: 0.5rem; transition: all 0.2s; background: none; border: none; cursor: pointer; }
+.itin-view-nav-btn:hover { color: #fb923c; background-color: rgba(255,255,255,0.05); }
+.itin-view-days-list { display: flex; flex-direction: column; gap: 0.75rem; }
+.itin-view-day-item { display: flex; align-items: center; justify-content: space-between; padding: 1rem; border-radius: 1rem; cursor: pointer; transition: all 0.2s; border: 1px solid transparent; }
+.itin-view-day-item.active { background-color: rgba(255,255,255,0.05); border-color: rgba(249,115,22,0.3); }
+.itin-view-day-item:not(.active):hover { background-color: rgba(255,255,255,0.05); }
+.itin-view-day-left { display: flex; align-items: center; gap: 1rem; }
+.itin-view-day-num { width: 2.5rem; height: 2.5rem; border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.875rem; background-color: rgba(255,255,255,0.05); color: #4b5563; }
+.itin-view-day-num.active { background-color: #f97316; color: white; box-shadow: 0 10px 15px -3px rgba(249,115,22,0.2); }
+.itin-view-day-date { font-weight: 700; color: white; font-size: 0.875rem; letter-spacing: -0.025em; }
+.itin-view-day-stage { font-size: 0.625rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #6b7280; }
+.itin-view-sync-card { background-color: #080808; border-radius: 2.5rem; padding: 2rem; color: white; position: relative; overflow: hidden; border: 1px solid rgba(255,255,255,0.05); display: flex; flex-direction: column; gap: 1rem; }
+.itin-view-sync-bg-icon { position: absolute; bottom: -2.5rem; right: -2.5rem; color: rgba(255,255,255,0.05); transform: rotate(-12deg); transition: transform 0.5s; }
+.itin-view-sync-card:hover .itin-view-sync-bg-icon { transform: scale(1.1) rotate(-12deg); }
+.itin-view-sync-title { font-size: 1.25rem; font-weight: 700; position: relative; z-index: 10; }
+.itin-view-sync-desc { font-size: 0.875rem; color: #6b7280; font-weight: 500; position: relative; z-index: 10; line-height: 1.625; letter-spacing: -0.025em; }
+.itin-view-sync-btn { width: 100%; background-color: #f97316; color: white; font-weight: 700; padding: 1rem; border-radius: 0.75rem; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; position: relative; z-index: 10; transition: all 0.2s; border: none; cursor: pointer; box-shadow: 0 10px 15px -3px rgba(249,115,22,0.2); }
+.itin-view-sync-btn:hover { background-color: #ea580c; }
+.itin-view-content { flex: 1; order: 1; }
+@media (min-width: 1280px) { .itin-view-content { order: 2; } }
+.itin-view-timeline-list { display: flex; flex-direction: column; gap: 1.5rem; }
+.itin-view-timeline-item { display: flex; gap: 2rem; }
+.itin-view-timeline-left { display: flex; flex-direction: column; align-items: center; }
+.itin-view-day-circle { width: 4rem; height: 4rem; border-radius: 1.5rem; background-color: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); display: flex; flex-direction: column; align-items: center; justify-content: center; transition: background-color 0.2s; }
+.itin-view-timeline-item:hover .itin-view-day-circle { background-color: #f97316; }
+.itin-view-day-circle-label { font-size: 0.625rem; font-weight: 900; color: #94a3b8; line-height: 1; margin-bottom: 0.25rem; text-transform: uppercase; }
+.itin-view-day-circle-num { font-size: 1.25rem; font-weight: 900; color: white; line-height: 1; }
+.itin-view-timeline-connector { flex: 1; width: 0.25rem; background-color: rgba(255,255,255,0.05); margin: 1rem 0; border-radius: 9999px; }
+.itin-view-timeline-card-wrapper { flex: 1; padding-bottom: 2.5rem; }
+.itin-view-timeline-card { background-color: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 2rem; border: 1px solid rgba(255,255,255,0.1); transition: all 0.2s; position: relative; }
+.itin-view-timeline-card:hover { box-shadow: 0 20px 25px -5px rgba(0,0,0,0.3); }
+.itin-view-timeline-card-arrow { position: absolute; left: -0.75rem; top: 1.5rem; width: 1.5rem; height: 1.5rem; background-color: rgba(255,255,255,0.05); transform: rotate(45deg); border-left: 1px solid rgba(255,255,255,0.1); border-bottom: 1px solid rgba(255,255,255,0.1); border-radius: 0.125rem; }
+.itin-view-timeline-card-content { display: flex; flex-direction: column; gap: 1rem; }
+@media (min-width: 768px) { .itin-view-timeline-card-content { flex-direction: row; align-items: center; justify-content: space-between; } }
+.itin-view-timeline-card-left { display: flex; align-items: center; gap: 1.5rem; }
+.itin-view-timeline-img-wrapper { width: 6rem; height: 6rem; border-radius: 1rem; overflow: hidden; }
+.itin-view-timeline-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.2s; }
+.itin-view-timeline-img-wrapper:hover .itin-view-timeline-img { transform: scale(1.1); }
+.itin-view-timeline-info { display: flex; flex-direction: column; gap: 0.25rem; }
+.itin-view-timeline-time { display: flex; align-items: center; gap: 0.5rem; color: #fb923c; font-size: 0.625rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.2em; margin-bottom: 0.25rem; }
+.itin-view-timeline-act-name { font-size: 1.25rem; font-weight: 900; color: white; letter-spacing: -0.025em; }
+.itin-view-timeline-act-loc { font-size: 0.875rem; font-weight: 700; color: #6b7280; }
+.itin-view-timeline-card-right { display: flex; flex-direction: column; align-items: flex-end; gap: 0.5rem; flex-shrink: 0; }
+.itin-view-timeline-cost { font-size: 1.125rem; font-weight: 900; color: white; }
+.itin-view-timeline-map-btn { padding: 0.5rem 1rem; background-color: rgba(255,255,255,0.05); color: #6b7280; border-radius: 0.75rem; font-weight: 700; font-size: 0.75rem; transition: all 0.2s; border: 1px solid rgba(255,255,255,0.1); cursor: pointer; }
+.itin-view-timeline-map-btn:hover { background-color: rgba(249,115,22,0.1); color: #fb923c; }
+.itin-view-add-day-btn { width: 100%; height: 6rem; border: 3px dashed rgba(255,255,255,0.1); border-radius: 2.5rem; display: flex; align-items: center; justify-content: center; color: #94a3b8; transition: all 0.2s; font-weight: 900; text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.875rem; gap: 0.5rem; background: none; cursor: pointer; }
+.itin-view-add-day-btn:hover { border-color: rgba(249,115,22,0.3); color: #fb923c; background-color: rgba(249,115,22,0.05); }
+.itin-view-add-day-icon { transition: transform 0.2s; }
+.itin-view-add-day-btn:hover .itin-view-add-day-icon { transform: rotate(90deg); }
+.itin-view-grid { display: grid; grid-template-columns: repeat(1, minmax(0, 1fr)); gap: 1.5rem; }
+@media (min-width: 768px) { .itin-view-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1024px) { .itin-view-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.itin-view-grid-card { background-color: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 2rem; border: 1px solid rgba(255,255,255,0.1); transition: all 0.2s; display: flex; flex-direction: column; justify-content: space-between; gap: 1.5rem; }
+.itin-view-grid-card:hover { box-shadow: 0 20px 25px -5px rgba(0,0,0,0.3); }
+.itin-view-grid-card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem; }
+.itin-view-grid-day-badge { background-color: #1e293b; color: white; padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.625rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.1em; }
+.itin-view-grid-more { color: #94a3b8; transition: color 0.2s; background: none; border: none; cursor: pointer; }
+.itin-view-grid-more:hover { color: white; }
+.itin-view-grid-title { font-size: 1.125rem; font-weight: 900; color: white; margin-bottom: 0.5rem; letter-spacing: -0.025em; }
+.itin-view-grid-desc { font-size: 0.875rem; color: #6b7280; font-weight: 500; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.itin-view-grid-footer { display: flex; flex-direction: column; gap: 0.75rem; }
+.itin-view-grid-avatars { display: flex; }
+.itin-view-avatar { width: 2rem; height: 2rem; border-radius: 9999px; border: 2px solid rgba(255,255,255,0.1); overflow: hidden; margin-left: -0.5rem; }
+.itin-view-avatar:first-child { margin-left: 0; }
+.itin-view-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.itin-view-avatar-extra { width: 2rem; height: 2rem; border-radius: 9999px; border: 2px solid rgba(255,255,255,0.1); background-color: rgba(255,255,255,0.05); font-size: 0.625rem; font-weight: 900; color: #6b7280; display: flex; align-items: center; justify-content: center; margin-left: -0.5rem; }
+.itin-view-grid-view-btn { width: 100%; padding: 0.75rem; background-color: rgba(249,115,22,0.1); color: #fb923c; border-radius: 0.75rem; font-weight: 700; font-size: 0.75rem; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 0.5rem; border: none; cursor: pointer; }
+.itin-view-grid-view-btn:hover { background-color: #f97316; color: white; }

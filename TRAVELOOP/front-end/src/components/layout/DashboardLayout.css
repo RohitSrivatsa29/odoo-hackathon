@@ -1,0 +1,24 @@
+.dashboard-layout {
+  display: flex;
+  min-height: 100vh;
+  background-color: #050505;
+  color: #E0E0E0;
+}
+
+.dashboard-layout ::selection {
+  background-color: rgba(249, 115, 22, 0.3); /* orange-500/30 */
+  color: #fed7aa; /* orange-200 */
+}
+
+.dashboard-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.dashboard-main {
+  flex: 1;
+  padding: 2rem;
+  overflow-x: hidden;
+}
