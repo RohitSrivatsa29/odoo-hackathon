@@ -1,13 +1,9 @@
+/* ── Dashboard Layout ─────────────────────────────────────── */
 .dashboard-layout {
   display: flex;
   min-height: 100vh;
-  background-color: #050505;
-  color: #E0E0E0;
-}
-
-.dashboard-layout ::selection {
-  background-color: rgba(249, 115, 22, 0.3); /* orange-500/30 */
-  color: #fed7aa; /* orange-200 */
+  background: #050505;
+  color: #e2e8f0;
 }
 
 .dashboard-content {
@@ -19,6 +15,6 @@
 
 .dashboard-main {
   flex: 1;
-  padding: 2rem;
+  padding: 2rem 2.5rem;
   overflow-x: hidden;
 }

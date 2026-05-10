@@ -1,4 +1,5 @@
 import os
+import json
 import shutil
 from fastapi import FastAPI, HTTPException, Depends, File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
@@ -65,7 +66,15 @@ def read_users(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
 # --- TRIPS ENDPOINTS ---
 @app.post("/api/trips/", response_model=schemas.Trip)
 def create_trip(trip: schemas.TripCreate, db: Session = Depends(get_db)):
-    db_trip = models.Trip(**trip.model_dump(), owner_id=1) # Hardcoded owner for MVP
+    trip_data = trip.model_dump()
+    # cities arrives as a JSON string from frontend already (see TripContext/CreateTripPage)
+    # If it's somehow a list, serialize it
+    if isinstance(trip_data.get('cities'), list):
+        trip_data['cities'] = json.dumps(trip_data['cities'])
+    # Ensure name falls back to title or destination
+    if not trip_data.get('name'):
+        trip_data['name'] = trip_data.get('title') or trip_data.get('destination') or 'Untitled Trip'
+    db_trip = models.Trip(**trip_data, owner_id=1)
     db.add(db_trip)
     db.commit()
     db.refresh(db_trip)
@@ -82,6 +91,7 @@ def read_trip(trip_id: int, db: Session = Depends(get_db)):
     if db_trip is None:
         raise HTTPException(status_code=404, detail="Trip not found")
     return db_trip
+
 
 # --- ITINERARY ENDPOINTS ---
 @app.post("/api/trips/{trip_id}/itinerary/", response_model=schemas.ItineraryItem)

@@ -2,23 +2,24 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
   Plus, 
-  Search, 
   MapPin, 
   TrendingUp, 
   Calendar, 
-  ArrowRight,
   Globe
 } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useAuth } from '../context/AuthContext';
 import { useTrips } from '../context/TripContext';
-import { POPULAR_CITIES } from '../data/mockData';
 import './HomePage.css';
 
 export function HomePage() {
   const { user } = useAuth();
   const { trips } = useTrips();
   const navigate = useNavigate();
+
+  const totalTrips = trips.length;
+  const completedTrips = trips.filter(t => t.status === 'completed').length;
+  const planningTrips = trips.filter(t => t.status === 'planning' || t.status === 'ongoing').length;
 
   return (
     <div className="homepage-container">
@@ -38,34 +39,39 @@ export function HomePage() {
             className="home-banner-text-box"
           >
             <div className="home-banner-tag">
-              <span className="home-banner-tag-text">Upcoming Journey</span>
+              <span className="home-banner-tag-text">Welcome Back</span>
               <span className="home-banner-tag-dot"></span>
-              <span className="home-banner-tag-date">{trips && trips.length > 0 ? trips[0].startDate : 'Summer 2026'}</span>
+              <span className="home-banner-tag-date">
+                {trips && trips.length > 0 ? `${totalTrips} trip${totalTrips !== 1 ? 's' : ''} planned` : 'Ready to explore?'}
+              </span>
             </div>
             <h1 className="home-banner-title">
-              Ready for {trips && trips.length > 0 ? trips[0].name : 'a new adventure'}, <br />
-              <span className="home-banner-title-highlight">{user?.name || 'Traveler'}?</span>
+              {trips && trips.length > 0
+                ? <>Your next adventure awaits,<br /></>
+                : <>Start planning your<br /></>
+              }
+              <span className="home-banner-title-highlight">{user?.name || user?.username || 'Traveler'}</span>
             </h1>
             <button 
               onClick={() => navigate('/create-trip')}
               className="home-btn-primary"
             >
               <Plus size={20} />
-              Open Planner
+              {trips.length > 0 ? 'New Trip' : 'Create First Trip'}
             </button>
           </motion.div>
         </div>
       </section>
 
-      {/* Statistics & Budget Highlights */}
+      {/* Real Statistics */}
       <section className="home-stats">
         <div className="home-stat-card group">
           <div className="home-stat-icon-wrapper orange">
             <Globe size={24} />
           </div>
           <div>
-            <p className="home-stat-label">Trips Taken</p>
-            <p className="home-stat-value">12</p>
+            <p className="home-stat-label">Total Trips</p>
+            <p className="home-stat-value">{totalTrips}</p>
           </div>
         </div>
         <div className="home-stat-card group">
@@ -73,8 +79,8 @@ export function HomePage() {
             <TrendingUp size={24} />
           </div>
           <div>
-            <p className="home-stat-label">Budget Saved</p>
-            <p className="home-stat-value">15%</p>
+            <p className="home-stat-label">Completed</p>
+            <p className="home-stat-value">{completedTrips}</p>
           </div>
         </div>
         <div className="home-stat-card group">
@@ -82,89 +88,80 @@ export function HomePage() {
             <MapPin size={24} />
           </div>
           <div>
-            <p className="home-stat-label">Cities Visited</p>
-            <p className="home-stat-value">24</p>
+            <p className="home-stat-label">In Planning</p>
+            <p className="home-stat-value">{planningTrips}</p>
           </div>
         </div>
       </section>
 
-      <div className="home-main-grid">
-        {/* Recent Trips */}
-        <section className="home-recent-trips">
-          <div className="home-section-header">
-            <h2 className="home-section-title">Upcoming & Recent Trips</h2>
-            <button 
-              onClick={() => navigate('/trips')}
-              className="home-section-link"
+      {/* Recent Trips */}
+      <section className="home-recent-trips">
+        <div className="home-section-header">
+          <h2 className="home-section-title">Upcoming & Recent Trips</h2>
+          <button 
+            onClick={() => navigate('/trips')}
+            className="home-section-link"
+          >
+            See all
+          </button>
+        </div>
+        
+        <div className="home-trips-grid">
+          {trips && trips.length > 0 ? trips.slice(0, 4).map((trip) => (
+            <motion.div 
+              key={trip.id}
+              whileHover={{ y: -5 }}
+              className="home-trip-card group"
+              onClick={() => navigate(`/itinerary/${trip.id}`)}
             >
-              See all
-            </button>
-          </div>
-          
-          <div className="home-trips-grid">
-            {trips && trips.length > 0 ? trips.slice(0, 2).map((trip) => (
-              <motion.div 
-                key={trip.id}
-                whileHover={{ y: -5 }}
-                className="home-trip-card group"
-                onClick={() => navigate(`/itinerary/${trip.id}`)}
-              >
-                <div className="home-trip-img-wrapper">
-                  <img src={trip.coverImage || trip.cover_image} className="home-trip-img" alt={trip.name} />
-                  <div className="home-trip-status">
-                    {trip.status}
-                  </div>
+              <div className="home-trip-img-wrapper">
+                <img 
+                  src={trip.coverImage || trip.cover_image || 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&q=80&w=800'} 
+                  className="home-trip-img" 
+                  alt={trip.name} 
+                />
+                <div className="home-trip-status">
+                  {trip.status}
                 </div>
-                <div className="home-trip-info">
-                  <div>
-                    <h3 className="home-trip-name">{trip.name}</h3>
-                    <div className="home-trip-meta">
-                      <div className="home-trip-meta-item"><Calendar size={12} /> {trip.startDate || trip.start_date || 'Future'}</div>
-                      <div className="home-trip-meta-item"><MapPin size={12} /> {trip.destinationCount || 0} Stops</div>
+              </div>
+              <div className="home-trip-info">
+                <div>
+                  <h3 className="home-trip-name">{trip.name}</h3>
+                  <div className="home-trip-meta">
+                    <div className="home-trip-meta-item">
+                      <Calendar size={12} /> {trip.startDate || trip.start_date || 'Not set'}
                     </div>
-                  </div>
-                  <div className="home-trip-progress-bar">
-                    <div className="home-trip-progress-fill" style={{ width: `${trip.progress || 0}%` }}></div>
+                    {trip.budget && (
+                      <div className="home-trip-meta-item">
+                        <MapPin size={12} /> ${trip.budget}
+                      </div>
+                    )}
                   </div>
                 </div>
-              </motion.div>
-            )) : (
-              <div className="home-trips-empty">
-                <p>No trips yet. Create your first trip to get started!</p>
               </div>
-            )}
-          </div>
-        </section>
-
-        {/* Recommended Destinations */}
-        <section className="home-recommended">
-          <h2 className="home-section-title">Recommended</h2>
-          <div className="home-recommended-list">
-            {POPULAR_CITIES && POPULAR_CITIES.length > 0 ? POPULAR_CITIES.map((city, idx) => (
-              <motion.div 
-                key={city.name}
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: idx * 0.1 }}
-                className="home-city-card group"
-              >
-                <img src={city.image} className="home-city-img" alt={city.name} />
-                <div className="home-city-info">
-                  <h4 className="home-city-name">{city.name}</h4>
-                  <p className="home-city-country">{city.country}</p>
-                </div>
-                <button className="home-city-btn group-hover:active">
-                  <Plus size={18} />
+            </motion.div>
+          )) : (
+            <div style={{ 
+              gridColumn: '1 / -1', 
+              textAlign: 'center', 
+              padding: '3rem 2rem',
+              background: 'rgba(255,255,255,0.03)',
+              borderRadius: '1.25rem',
+              border: '1px dashed rgba(255,255,255,0.1)',
+              color: '#4b5563'
+            }}>
+              <Globe size={40} style={{ margin: '0 auto 1rem', opacity: 0.3 }} />
+              <p style={{ fontSize: '0.9rem', marginBottom: '0.5rem' }}>No trips yet</p>
+              <p style={{ fontSize: '0.8rem' }}>
+                <button onClick={() => navigate('/create-trip')} style={{ color: '#fb923c', fontWeight: 600, background: 'none', border: 'none', cursor: 'pointer' }}>
+                  Create your first trip →
                 </button>
-              </motion.div>
-            )) : (
-              <div className="home-recommended-empty">
-                <p>Start exploring to see recommendations</p>
-              </div>
-            )}
-          </div>
-        </section>
-      </div>
+              </p>
+            </div>
+          )}
+        </div>
+      </section>
     </div>
   );
 }
+

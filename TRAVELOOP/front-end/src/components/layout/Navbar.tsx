@@ -102,14 +102,15 @@ export function Navbar() {
             aria-label="Profile menu"
           >
             <div className="navbar-profile-info">
-              <p className="navbar-profile-name">{user?.name || user?.username}</p>
-              <p className="navbar-profile-role">Gold Explorer</p>
+              <p className="navbar-profile-name">{user?.first_name || user?.username}</p>
+              <p className="navbar-profile-role">{user?.email}</p>
             </div>
-            <img 
-              src={user?.avatar} 
-              alt={user?.name || user?.username} 
-              className="navbar-profile-avatar"
-            />
+            {/* Initials avatar — no photo */}
+            <div className="navbar-profile-avatar navbar-profile-initials">
+              {[user?.first_name, user?.last_name]
+                .filter(Boolean).map(n => n![0].toUpperCase()).join('')
+                || user?.username?.[0]?.toUpperCase() || '?'}
+            </div>
             <ChevronDown size={16} className={`navbar-chevron ${dropdownOpen ? 'open' : ''}`} />
           </button>
 
@@ -136,7 +137,6 @@ export function Navbar() {
               </button>
             </div>
           )}
-        </div>
         </div>
       </div>
     </header>

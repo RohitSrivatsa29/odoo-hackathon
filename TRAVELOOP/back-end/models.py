@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Float, ForeignKey, Boolean, Date
+from sqlalchemy import Column, Integer, String, Float, ForeignKey, Boolean, Date, Text
 from sqlalchemy.orm import relationship
 from database import Base
 
@@ -15,12 +15,18 @@ class User(Base):
 class Trip(Base):
     __tablename__ = "trips"
     id = Column(Integer, primary_key=True, index=True)
-    title = Column(String, index=True)
-    destination = Column(String)
+    name = Column(String, index=True)          # trip display name
+    title = Column(String, nullable=True)      # legacy
+    destination = Column(String, nullable=True)# legacy
     start_date = Column(String)
     end_date = Column(String)
+    budget = Column(Float, nullable=True)
+    travelers = Column(Integer, default=1)
+    status = Column(String, default='planning')
+    cities = Column(Text, nullable=True)       # JSON string: [{city, country, nights}]
+    cover_image = Column(String, nullable=True)
     owner_id = Column(Integer, ForeignKey("users.id"))
-    
+
     owner = relationship("User", back_populates="trips")
     itineraries = relationship("ItineraryItem", back_populates="trip", cascade="all, delete-orphan")
     expenses = relationship("Expense", back_populates="trip", cascade="all, delete-orphan")

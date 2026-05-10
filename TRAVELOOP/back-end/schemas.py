@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import List, Optional
+from typing import List, Optional, Any
 
 # --- User Schemas ---
 class UserBase(BaseModel):
@@ -17,10 +17,16 @@ class User(UserBase):
 
 # --- Trip Schemas ---
 class TripBase(BaseModel):
-    title: str
-    destination: str
+    name: Optional[str] = None
+    title: Optional[str] = None          # legacy
+    destination: Optional[str] = None    # legacy
     start_date: str
     end_date: str
+    budget: Optional[float] = None
+    travelers: Optional[int] = 1
+    status: Optional[str] = 'planning'
+    cities: Optional[str] = None         # JSON string
+    cover_image: Optional[str] = None
 
 class TripCreate(TripBase):
     pass

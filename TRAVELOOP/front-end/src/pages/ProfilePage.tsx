@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { 
   User, 
   Settings, 
@@ -7,10 +7,6 @@ import {
   Bell, 
   LogOut, 
   CreditCard,
-  History,
-  Languages,
-  CheckCircle2,
-  Camera,
   Edit
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -21,14 +17,11 @@ import './ProfilePage.css';
 export function ProfilePage() {
   const navigate = useNavigate();
   const { user, logout } = useAuth();
-  const [avatarUrl, setAvatarUrl] = useState(user?.avatar || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=150');
-  const [uploading, setUploading] = useState(false);
   const [notifications, setNotifications] = useState({
     booking: true,
     price: false,
     recommendations: true
   });
-  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleNotificationToggle = (key: keyof typeof notifications) => {
     setNotifications(prev => {
@@ -38,38 +31,11 @@ export function ProfilePage() {
     });
   };
 
-  const handleAvatarClick = () => {
-    fileInputRef.current?.click();
-  };
-
-  const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (!file) return;
-
-    setUploading(true);
-    const formData = new FormData();
-    formData.append('file', file);
-    
-    // Using mock user ID 1
-    try {
-      const response = await fetch('http://localhost:8000/api/users/1/avatar', {
-        method: 'POST',
-        body: formData,
-      });
-      
-      if (response.ok) {
-        const data = await response.json();
-        setAvatarUrl(`http://localhost:8000/${data.filename}`);
-      } else {
-        alert('Failed to upload profile picture.');
-      }
-    } catch (error) {
-      console.error(error);
-      alert('Error uploading profile picture.');
-    } finally {
-      setUploading(false);
-    }
-  };
+  // Generate initials avatar from user name
+  const initials = [user?.first_name, user?.last_name]
+    .filter(Boolean)
+    .map(n => n![0].toUpperCase())
+    .join('') || user?.username?.[0]?.toUpperCase() || '?';
 
   return (
     <div className="profile-container">
@@ -77,40 +43,37 @@ export function ProfilePage() {
         {/* Profile Info Sidebar */}
         <div className="profile-sidebar">
            <div className="profile-card">
-              <div className="profile-avatar-wrapper group" onClick={handleAvatarClick} style={{ cursor: 'pointer' }}>
-                 <div className="profile-avatar-frame">
-                    <img src={avatarUrl} className="profile-avatar-img" alt="" style={{ opacity: uploading ? 0.5 : 1 }} />
-                 </div>
-                 <div className="profile-avatar-edit">
-                    <Camera size={20} />
-                 </div>
-                 <input 
-                   type="file" 
-                   ref={fileInputRef} 
-                   onChange={handleFileChange} 
-                   accept="image/*" 
-                   style={{ display: 'none' }} 
-                 />
+              {/* Initials Avatar — no upload */}
+              <div className="profile-avatar-frame" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'linear-gradient(135deg, #f97316, #ea580c)', marginBottom: '1.5rem' }}>
+                <span style={{ fontSize: '2.5rem', fontWeight: 800, color: 'white', fontFamily: 'Outfit, sans-serif', letterSpacing: '-0.02em' }}>
+                  {initials}
+                </span>
               </div>
-              <h2 className="profile-name">{user?.name || user?.username}</h2>
+
+              <h2 className="profile-name">
+                {user?.first_name && user?.last_name
+                  ? `${user.first_name} ${user.last_name}`
+                  : user?.username}
+              </h2>
               <p className="profile-email">{user?.email}</p>
               
               <div className="profile-stats">
                 <div className="profile-stat">
-                   <span className="profile-stat-label">Badge</span>
-                   <span className="profile-stat-value">Gold Explorer</span>
+                   <span className="profile-stat-label">Username</span>
+                   <span className="profile-stat-value">@{user?.username}</span>
                 </div>
                 <div className="profile-stat">
-                   <span className="profile-stat-label">Points</span>
-                   <span className="profile-stat-value">4,250</span>
+                   <span className="profile-stat-label">Member</span>
+                   <span className="profile-stat-value">Explorer</span>
                 </div>
               </div>
            </div>
 
-           <div className="profile-destinations">
-              <h3 className="profile-destinations-title">Saved Destinations</h3>
-              <div className="profile-destinations-list">
-                 {user?.savedDestinations?.map((dest, i) => (
+           {user?.savedDestinations && user.savedDestinations.length > 0 && (
+             <div className="profile-destinations">
+               <h3 className="profile-destinations-title">Saved Destinations</h3>
+               <div className="profile-destinations-list">
+                 {user.savedDestinations.map((dest, i) => (
                    <motion.div 
                      key={dest} 
                      initial={{ opacity: 0, x: -10 }} 
@@ -122,8 +85,9 @@ export function ProfilePage() {
                       <span className="profile-destination-name">{dest}</span>
                    </motion.div>
                  ))}
-              </div>
-           </div>
+               </div>
+             </div>
+           )}
         </div>
 
         {/* Settings Area */}
@@ -161,7 +125,7 @@ export function ProfilePage() {
                        <div className="profile-settings-icon-wrapper green"><CreditCard size={28} /></div>
                        <div>
                           <h4 className="profile-settings-item-title">Billing &amp; Payments</h4>
-                          <p className="profile-settings-item-desc">Manage your subscription and payment methods.</p>
+                          <p className="profile-settings-item-desc">Manage your payment methods.</p>
                        </div>
                     </div>
                     <Edit size={20} className="profile-settings-edit-icon" />

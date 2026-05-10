@@ -49,25 +49,50 @@ export function TripProvider({ children }: { children: ReactNode }) {
       });
       if (response.ok) {
         const data = await response.json();
-        const mappedTrips = data.trips.map((trip: any) => ({
-          ...trip,
-          startDate: trip.start_date,
-          endDate: trip.end_date,
-          coverImage: trip.cover_image,
-          destinationCount: trip.destinationCount || 0,
-          progress: trip.progress || 0,
-          cities: trip.cities || [],
-          budget: typeof trip.budget === 'object' ? trip.budget : {
-            total: trip.budget || 0,
-            spent: 0,
-            categories: [
-              { name: 'Transport', value: 0 },
-              { name: 'Food', value: 0 },
-              { name: 'Stay', value: 0 },
-              { name: 'Fun', value: 0 }
-            ]
-          }
-        }));
+        const mappedTrips = data.trips.map((trip: any) => {
+          // Ensure budget is always a plain number — never an object
+          const rawBudget = trip.budget;
+          const budgetNum = typeof rawBudget === 'number'
+            ? rawBudget
+            : typeof rawBudget === 'string'
+              ? parseFloat(rawBudget) || 0
+              : typeof rawBudget === 'object' && rawBudget !== null
+                ? (rawBudget.total ?? 0)
+                : 0;
+
+          // Parse cities from JSON string to array
+          let citiesArr: any[] = [];
+          try {
+            const raw = trip.cities;
+            if (typeof raw === 'string' && raw.startsWith('[')) {
+              citiesArr = JSON.parse(raw);
+            } else if (Array.isArray(raw)) {
+              citiesArr = raw;
+            }
+          } catch {}
+
+          return {
+            ...trip,
+            name: trip.name || trip.title || trip.destination || 'Untitled Trip',
+            budget: budgetNum,
+            budgetBreakdown: {
+              total: budgetNum, spent: 0,
+              categories: [
+                { name: 'Transport', value: 0 },
+                { name: 'Food',      value: 0 },
+                { name: 'Stay',      value: 0 },
+                { name: 'Fun',       value: 0 },
+              ],
+            },
+            startDate:        trip.start_date,
+            endDate:          trip.end_date,
+            coverImage:       trip.cover_image,
+            destinationCount: trip.destinationCount || citiesArr.length || 0,
+            progress:         trip.progress || 0,
+            cities:           citiesArr,            // always an array
+          };
+        });
+
         setTrips(mappedTrips);
       }
     } catch (err) {

@@ -34,15 +34,21 @@
 }
 
 .profile-card {
-  background-color: #080808;
-  border-radius: 3rem;
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  padding: 2rem;
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  background: rgba(8, 8, 8, 0.9);
+  border-radius: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  padding: 2.25rem;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
+  transition: var(--transition);
+}
+
+.profile-card:hover {
+  border-color: rgba(255,255,255,0.1);
+  box-shadow: 0 16px 48px rgba(0,0,0,0.5);
 }
 
 .profile-avatar-wrapper {
@@ -52,44 +58,50 @@
 }
 
 .profile-avatar-frame {
-  width: 10rem;
-  height: 10rem;
-  border-radius: 2.5rem;
+  width: 9rem;
+  height: 9rem;
+  border-radius: 1.75rem;
   overflow: hidden;
-  border: 4px solid rgba(255, 255, 255, 0.05);
-  transition: all 0.3s;
+  border: 3px solid rgba(255, 255, 255, 0.07);
+  transition: var(--transition);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
 }
 
 .profile-avatar-wrapper:hover .profile-avatar-frame {
-  border-color: rgba(249, 115, 22, 0.3);
+  border-color: rgba(249, 115, 22, 0.5);
+  box-shadow: 0 8px 28px rgba(249,115,22,0.2);
 }
 
 .profile-avatar-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  opacity: 0.8;
+  opacity: 0.9;
+  transition: transform 0.4s;
+}
+
+.profile-avatar-wrapper:hover .profile-avatar-img {
+  transform: scale(1.05);
 }
 
 .profile-avatar-edit {
   position: absolute;
-  bottom: -0.625rem;
-  right: -0.625rem;
-  background-color: #f97316;
+  bottom: -0.5rem;
+  right: -0.5rem;
+  background: linear-gradient(135deg, #f97316, #ea580c);
   color: white;
-  padding: 0.75rem;
-  border-radius: 1rem;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
-  border: 4px solid #080808;
-  transform: translateY(0.5rem);
+  padding: 0.625rem;
+  border-radius: 0.875rem;
+  box-shadow: 0 8px 24px rgba(249,115,22,0.35);
+  border: 3px solid #080808;
+  transform: translateY(8px) scale(0.9);
   opacity: 0;
-  transition: all 0.3s;
+  transition: var(--transition);
 }
 
 .profile-avatar-wrapper:hover .profile-avatar-edit {
-  transform: translateY(0);
+  transform: translateY(0) scale(1);
   opacity: 1;
-  transform: scale(1.1);
 }
 
 .profile-name {
@@ -120,10 +132,17 @@
 
 .profile-stat {
   text-align: center;
-  padding: 0.75rem;
-  background-color: rgba(255, 255, 255, 0.05);
+  padding: 0.875rem;
+  background: rgba(255, 255, 255, 0.04);
   border-radius: 1rem;
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  transition: var(--transition);
+}
+
+.profile-stat:hover {
+  background: rgba(249,115,22,0.08);
+  border-color: rgba(249,115,22,0.2);
+  transform: translateY(-2px);
 }
 
 .profile-stat-label {
@@ -234,17 +253,17 @@
 }
 
 .profile-settings-item {
-  padding: 2.5rem;
+  padding: 2rem 2.5rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  transition: background-color 0.2s;
+  transition: var(--transition);
   cursor: pointer;
   color: white;
 }
 
 .profile-settings-item:hover {
-  background-color: rgba(255, 255, 255, 0.05);
+  background: rgba(249, 115, 22, 0.05);
 }
 
 .profile-settings-item-content {
@@ -283,12 +302,13 @@
 }
 
 .profile-settings-edit-icon {
-  color: #374151;
-  transition: all 0.2s;
+  color: #1f2937;
+  transition: var(--transition);
 }
 
 .profile-settings-item:hover .profile-settings-edit-icon {
   color: #fb923c;
+  transform: scale(1.15);
 }
 
 .profile-notifications-card {
@@ -374,50 +394,50 @@
 }
 
 .profile-signout-btn {
-  padding: 1.25rem 3rem;
-  background-color: rgba(239, 68, 68, 0.1);
-  color: #ef4444;
+  padding: 1rem 2.5rem;
+  background: rgba(239, 68, 68, 0.08);
+  color: #f87171;
   font-weight: 700;
-  border-radius: 1rem;
+  border-radius: 0.875rem;
   border: 1px solid rgba(239, 68, 68, 0.2);
-  transition: all 0.2s;
+  transition: var(--transition);
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  font-size: 0.625rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
+  gap: 0.625rem;
+  font-size: 0.8rem;
   cursor: pointer;
 }
 
 .profile-signout-btn:hover {
-  background-color: #ef4444;
-  color: white;
+  background: rgba(239, 68, 68, 0.18);
+  border-color: rgba(239, 68, 68, 0.4);
+  color: #fca5a5;
+  transform: translateY(-1px);
 }
 
 .profile-signout-btn:active {
-  transform: scale(0.95);
+  transform: scale(0.97);
 }
 
 .profile-support-btn {
-  padding: 1.25rem 3rem;
-  background-color: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 1rem 2.5rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   color: #6b7280;
-  font-weight: 700;
-  border-radius: 1rem;
-  transition: all 0.2s;
-  font-size: 0.625rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
+  font-weight: 600;
+  border-radius: 0.875rem;
+  transition: var(--transition);
+  font-size: 0.8rem;
   cursor: pointer;
 }
 
 .profile-support-btn:hover {
   color: white;
-  border-color: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.18);
+  background: rgba(255,255,255,0.07);
+  transform: translateY(-1px);
 }
 
 .profile-support-btn:active {
-  transform: scale(0.95);
+  transform: scale(0.97);
 }

@@ -37,38 +37,6 @@ export function MyTripsPage() {
       </div>
 
       <div className="trips-grid">
-<<<<<<< HEAD
-        {trips.map((trip, idx) => (
-          <motion.div 
-            key={trip.id}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: idx * 0.1 }}
-            className="trips-card group"
-          >
-            <div className="trips-card-img-wrapper">
-              <img 
-                src={trip.coverImage} 
-                className="trips-card-img" 
-                alt={trip.name} 
-              />
-              <div className="trips-card-overlay"></div>
-              
-              <div className="trips-card-actions">
-                <button 
-                  onClick={() => deleteTrip(trip.id)}
-                  className="trips-action-btn trips-action-delete"
-                >
-                  <Trash2 size={18} />
-                </button>
-                <button 
-                  onClick={() => navigate(`/itinerary/${trip.id}`)}
-                  className="trips-action-btn trips-action-edit"
-                  title="Edit Trip Itinerary"
-                >
-                  <Edit size={18} />
-                </button>
-=======
         {trips.length === 0 ? (
           <div style={{ gridColumn: '1 / -1', textAlign: 'center', padding: '4rem', color: '#94a3b8' }}>
             <p>No trips found. Start by creating your first adventure!</p>
@@ -84,7 +52,7 @@ export function MyTripsPage() {
             >
               <div className="trips-card-img-wrapper">
                 <img 
-                  src={trip.cover_image || 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&q=80&w=1200'} 
+                  src={trip.coverImage || trip.cover_image || 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&q=80&w=1200'} 
                   className="trips-card-img" 
                   alt={trip.name} 
                 />
@@ -101,7 +69,9 @@ export function MyTripsPage() {
                     <Trash2 size={18} />
                   </button>
                   <button 
+                    onClick={() => navigate(`/itinerary/${trip.id}`)}
                     className="trips-action-btn trips-action-edit"
+                    title="Edit Trip Itinerary"
                   >
                     <Edit size={18} />
                   </button>
@@ -110,7 +80,6 @@ export function MyTripsPage() {
                 <div className="trips-card-status">
                   {trip.status}
                 </div>
->>>>>>> 401c1272bdf70ae65e205b50bc48b2f284cf8a9c
               </div>
 
               <div className="trips-card-body">
@@ -133,7 +102,10 @@ export function MyTripsPage() {
                     <p className="trips-meta-label">Budget</p>
                     <div className="trips-meta-value">
                       <span style={{ fontSize: '0.875rem' }}>$</span>
-                      {trip.budget || 0}
+                      {typeof trip.budget === 'number'
+                        ? trip.budget.toLocaleString()
+                        : '—'}
+
                     </div>
                   </div>
                 </div>
@@ -146,23 +118,10 @@ export function MyTripsPage() {
                   <ExternalLink size={18} className="trips-view-icon" />
                 </button>
               </div>
-<<<<<<< HEAD
-
-              <button 
-                onClick={() => navigate(`/itinerary-view/${trip.id}`)}
-                className="trips-view-btn group/btn"
-              >
-                View Itinerary
-                <ExternalLink size={18} className="trips-view-icon" />
-              </button>
-            </div>
           </motion.div>
-        ))}
-=======
-            </motion.div>
-          ))
-        )}
->>>>>>> 401c1272bdf70ae65e205b50bc48b2f284cf8a9c
+        ))
+      )}
+
       </div>
     </div>
   );

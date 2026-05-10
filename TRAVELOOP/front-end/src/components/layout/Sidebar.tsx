@@ -63,12 +63,6 @@ export function Sidebar() {
       </nav>
 
       <div className="sidebar-footer">
-        <div className="sidebar-promo">
-          <p className="sidebar-promo-title">Travel Pro</p>
-          <p className="sidebar-promo-desc">Unlock AI itinerary generation for your next trip.</p>
-          <button className="sidebar-promo-btn">Upgrade Now</button>
-        </div>
-
         <button
           onClick={logout}
           className="sidebar-logout group"
@@ -77,6 +71,7 @@ export function Sidebar() {
           <span className="sidebar-logout-text">Sign Out</span>
         </button>
       </div>
+
     </aside>
   );
 }
