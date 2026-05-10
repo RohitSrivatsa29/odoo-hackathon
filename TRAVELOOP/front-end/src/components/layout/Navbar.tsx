@@ -1,14 +1,15 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Bell, Search, Menu } from 'lucide-react';
+import { Bell, Search, Menu, ChevronDown, LogOut } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import './Navbar.css';
 
 export function Navbar() {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
   const navigate = useNavigate();
   const [showNotifications, setShowNotifications] = useState(false);
   const notifRef = useRef<HTMLDivElement>(null);
+  const [dropdownOpen, setDropdownOpen] = React.useState(false);
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -93,22 +94,52 @@ export function Navbar() {
         </div>
         <div className="navbar-divider"></div>
         
-        <div 
-          className="navbar-profile group" 
-          onClick={() => navigate('/profile')}
-          style={{ cursor: 'pointer' }}
-        >
-          <div className="navbar-profile-info">
-            <p className="navbar-profile-name">{user?.name}</p>
-            <p className="navbar-profile-role">Gold Explorer</p>
-          </div>
-          <img 
-            src={user?.avatar} 
-            alt={user?.name} 
-            className="navbar-profile-avatar"
-          />
+        {/* Clickable profile with dropdown */}
+        <div className="navbar-profile-wrapper">
+          <button
+            className="navbar-profile group"
+            onClick={() => setDropdownOpen(prev => !prev)}
+            aria-label="Profile menu"
+          >
+            <div className="navbar-profile-info">
+              <p className="navbar-profile-name">{user?.name || user?.username}</p>
+              <p className="navbar-profile-role">Gold Explorer</p>
+            </div>
+            <img 
+              src={user?.avatar} 
+              alt={user?.name || user?.username} 
+              className="navbar-profile-avatar"
+            />
+            <ChevronDown size={16} className={`navbar-chevron ${dropdownOpen ? 'open' : ''}`} />
+          </button>
+
+          {dropdownOpen && (
+            <div className="navbar-dropdown" onClick={() => setDropdownOpen(false)}>
+              <button
+                className="navbar-dropdown-item"
+                onClick={() => navigate('/profile')}
+              >
+                <span>👤</span> My Profile
+              </button>
+              <button
+                className="navbar-dropdown-item"
+                onClick={() => navigate('/trips')}
+              >
+                <span>🗺️</span> My Trips
+              </button>
+              <div className="navbar-dropdown-divider" />
+              <button
+                className="navbar-dropdown-item danger"
+                onClick={() => { logout(); navigate('/login'); }}
+              >
+                <LogOut size={16} /> Sign Out
+              </button>
+            </div>
+          )}
+        </div>
         </div>
       </div>
     </header>
   );
 }
+

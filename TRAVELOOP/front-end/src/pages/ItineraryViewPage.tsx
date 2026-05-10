@@ -106,6 +106,7 @@ export function ItineraryViewPage() {
                  exit={{ opacity: 0, x: -20 }}
                  className="itin-view-timeline-list"
                >
+<<<<<<< HEAD
                  {trip.cities?.[0]?.activities?.map((act: any, idx: number) => (
                     <div key={act.id} className="itin-view-timeline-item group">
                        <div className="itin-view-timeline-left">
@@ -114,6 +115,16 @@ export function ItineraryViewPage() {
                              <span className="itin-view-day-circle-num">01</span>
                           </div>
                           {idx < trip.cities[0].activities.length - 1 && <div className="itin-view-timeline-connector"></div>}
+=======
+                 {trip?.cities?.[0]?.activities?.map((act: any, idx: number) => (
+                   <div key={act.id} className="itin-view-timeline-item group">
+                      <div className="itin-view-timeline-left">
+                         <div className="itin-view-day-circle">
+                            <span className="itin-view-day-circle-label">Day</span>
+                            <span className="itin-view-day-circle-num">01</span>
+                         </div>
+                         {idx < (trip?.cities?.[0]?.activities?.length || 0) - 1 && <div className="itin-view-timeline-connector"></div>}
+>>>>>>> 401c1272bdf70ae65e205b50bc48b2f284cf8a9c
                       </div>
                       
                       <div className="itin-view-timeline-card-wrapper">

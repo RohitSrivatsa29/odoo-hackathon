@@ -38,12 +38,12 @@ export function ItineraryBuilderPage() {
           </button>
           <div className="itin-builder-trip-info">
             <div className="itin-builder-cover-thumb">
-              <img src={trip.coverImage} className="itin-builder-cover-img" alt="" />
+              <img src={trip.coverImage || trip.cover_image} className="itin-builder-cover-img" alt="" />
             </div>
             <div>
               <h1 className="itin-builder-trip-name">{trip.name}</h1>
               <div className="itin-builder-trip-meta">
-                <span className="itin-builder-meta-item"><MapPin size={16} /> {trip.destinationCount} Cities</span>
+                <span className="itin-builder-meta-item"><MapPin size={16} /> {trip.destinationCount || 0} Cities</span>
                 <span className="itin-builder-status-badge">{trip.status}</span>
               </div>
             </div>

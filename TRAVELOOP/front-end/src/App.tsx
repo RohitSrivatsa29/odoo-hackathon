@@ -24,7 +24,12 @@ import { SecurityPrivacyPage } from './pages/SecurityPrivacyPage';
 import { BillingPage } from './pages/BillingPage';
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, loading } = useAuth();
+  
+  if (loading) {
+    return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', backgroundColor: '#0f172a', color: 'white' }}>Loading...</div>;
+  }
+  
   return isAuthenticated ? <>{children}</> : <Navigate to="/login" />;
 }
 

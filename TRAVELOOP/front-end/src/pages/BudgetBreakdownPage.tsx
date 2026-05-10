@@ -70,19 +70,19 @@ export function BudgetBreakdownPage() {
             <div className="budget-total-content">
               <div className="budget-total-header">
                 <span className="budget-total-label">Total Trip Budget</span>
-                <span className="budget-total-amount">${trip.budget.total}</span>
+                <span className="budget-total-amount">${trip.budget?.total || 0}</span>
               </div>
               <div className="budget-progress-section">
                 <div className="budget-progress-header">
                   <span className="budget-progress-label">Spent so far</span>
-                  <span className="budget-progress-amount">${trip.budget.spent}</span>
+                  <span className="budget-progress-amount">${trip.budget?.spent || 0}</span>
                 </div>
                 <div className="budget-progress-bar">
-                  <div className="budget-progress-fill" style={{ width: `${(trip.budget.spent / trip.budget.total) * 100}%` }}></div>
+                  <div className="budget-progress-fill" style={{ width: `${((trip.budget?.spent || 0) / (trip.budget?.total || 1)) * 100}%` }}></div>
                 </div>
                 <div className="budget-progress-footer">
-                  <span>{(trip.budget.spent / trip.budget.total * 100).toFixed(1)}% Usage</span>
-                  <span>${trip.budget.total - trip.budget.spent} Remaining</span>
+                  <span>{((trip.budget?.spent || 0) / (trip.budget?.total || 1) * 100).toFixed(1)}% Usage</span>
+                  <span>${(trip.budget?.total || 0) - (trip.budget?.spent || 0)} Remaining</span>
                 </div>
               </div>
             </div>
@@ -97,7 +97,7 @@ export function BudgetBreakdownPage() {
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
                   <Pie
-                    data={trip.budget.categories}
+                    data={trip.budget?.categories || []}
                     cx="50%"
                     cy="50%"
                     innerRadius={60}
@@ -105,7 +105,7 @@ export function BudgetBreakdownPage() {
                     paddingAngle={8}
                     dataKey="value"
                   >
-                    {trip.budget.categories.map((entry: any, index: number) => (
+                    {(trip.budget?.categories || []).map((entry: any, index: number) => (
                       <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                     ))}
                   </Pie>
@@ -116,7 +116,7 @@ export function BudgetBreakdownPage() {
               </ResponsiveContainer>
             </div>
             <div className="budget-pie-legend">
-               {trip.budget.categories.map((cat: any, idx: number) => (
+               {(trip.budget?.categories || []).map((cat: any, idx: number) => (
                  <div key={cat.name} className="budget-pie-legend-item">
                     <div className="budget-pie-legend-color" style={{ backgroundColor: COLORS[idx % COLORS.length] }}></div>
                     <span className="budget-pie-legend-label">{cat.name}</span>

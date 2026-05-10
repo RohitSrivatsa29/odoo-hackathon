@@ -92,7 +92,7 @@ export function ProfilePage() {
                    style={{ display: 'none' }} 
                  />
               </div>
-              <h2 className="profile-name">{user?.name}</h2>
+              <h2 className="profile-name">{user?.name || user?.username}</h2>
               <p className="profile-email">{user?.email}</p>
               
               <div className="profile-stats">
@@ -110,7 +110,7 @@ export function ProfilePage() {
            <div className="profile-destinations">
               <h3 className="profile-destinations-title">Saved Destinations</h3>
               <div className="profile-destinations-list">
-                 {user?.savedDestinations.map((dest, i) => (
+                 {user?.savedDestinations?.map((dest, i) => (
                    <motion.div 
                      key={dest} 
                      initial={{ opacity: 0, x: -10 }} 
